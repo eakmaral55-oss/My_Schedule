@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0e14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Esenkulova Akmaral">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  <link rel="stylesheet" href="style.css">
+  <title>My Schedule</title>
+</head>
+
+<body>
+  <div id="app">
+    <header class="header">
+      <div>
+        <div class="eyebrow">Esenkulova Akmaral</div>
+        <h1>Расписание</h1>
+        <p id="date"></p>
+      </div>
+      <button class="header-btn" id="settingsBtn">⚙︎</button>
+    </header>
+
+    <main id="schedule" class="screen active">
+      <div class="big-clock" id="clock">00:00</div>
+      <div class="day-strip" id="dayStrip"></div>
+
+      <section class="glass next">
+        <div class="label">СЛЕДУЮЩАЯ ПАРА</div>
+        <div class="next-row">
+          <div class="ring"><svg viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="50" />
+              <circle id="ring" class="ring-progress" cx="60" cy="60" r="50" />
+            </svg>
+            <div><b id="countdown">--:--</b><small id="countLabel">нет пары</small></div>
+          </div>
+          <div class="next-text"><span id="status">Сегодня</span>
+            <h2 id="nextName">Пар больше нет</h2>
+            <p id="nextInfo"></p>
+          </div>
+        </div>
+      </section>
+
+      <div class="list-head">
+        <h2 id="dayName">Понедельник</h2><button id="weekBtn">Вся неделя</button>
+      </div>
+      <div id="lessons"></div>
+    </main>
+
+    <main id="tasks" class="screen">
+      <div class="page-head">
+        <h2>Задания</h2>
+        <p>Учебные задачи и дедлайны.</p>
+      </div>
+      <button class="add-card glass" id="addTask">＋ Добавить задание</button>
+      <div id="taskList"></div>
+    </main>
+
+    <main id="notes" class="screen">
+      <div class="page-head">
+        <h2>Заметки</h2>
+        <p>Сохраняются на этом устройстве.</p>
+      </div>
+      <textarea id="notesText" class="glass notes" placeholder="Напиши заметку..."></textarea>
+    </main>
+
+    <main id="settings" class="screen">
+      <div class="page-head">
+        <h2>Настройки</h2>
+        <p>Персонализируй приложение.</p>
+      </div>
+      <button class="setting glass" data-open="appearance"><span>🎨</span>
+        <div><b>Оформление</b><small>Цвет, фон и стиль карточек</small></div><i>›</i>
+      </button>
+      <button class="setting glass" data-open="icons"><span>🖼️</span>
+        <div><b>Иконка</b><small>Выбери вариант логотипа</small></div><i>›</i>
+      </button>
+      <button class="setting glass" data-open="notifications"><span>🔔</span>
+        <div><b>Уведомления</b><small>Напоминания о парах</small></div><i>›</i>
+      </button>
+    </main>
+
+    <div class="modal" id="appearance">
+      <div class="modal-card glass">
+        <div class="modal-head">
+          <h2>Оформление</h2><button class="close">×</button>
+        </div>
+        <h3>Цвет</h3>
+        <div id="themes" class="themes"></div>
+        <h3>Карточки</h3>
+        <div id="cards" class="cards"></div>
+      </div>
+    </div>
+
+    <div class="modal" id="icons">
+      <div class="modal-card glass">
+        <div class="modal-head">
+          <h2>Иконка</h2><button class="close">×</button>
+        </div>
+        <p class="muted">Выбери вариант логотипа для приложения.</p>
+        <div id="iconGrid" class="icon-grid"></div>
+        <p class="muted">Для изменения значка на экране «Домой» iPhone потребуется заменить Home Screen ярлык после
+          выбора.</p>
+      </div>
+    </div>
+
+    <div class="modal" id="notifications">
+      <div class="modal-card glass">
+        <div class="modal-head">
+          <h2>Уведомления</h2><button class="close">×</button>
+        </div>
+        <label class="switch-row">Уведомления о парах <input type="checkbox" id="notif"><span></span></label>
+        <label class="switch-row">За 15 минут <input type="checkbox" id="notif15"><span></span></label>
+        <label class="switch-row">За 5 минут <input type="checkbox" id="notif5"><span></span></label>
+        <button class="primary" id="testNotif">Тестовое уведомление</button>
+        <p class="muted">На iPhone приложение должно быть добавлено на экран «Домой», а разрешение на уведомления —
+          предоставлено.</p>
+      </div>
+    </div>
+
+    <div class="modal" id="weekModal">
+      <div class="modal-card glass">
+        <div class="modal-head">
+          <h2>Вся неделя</h2><button class="close">×</button>
+        </div>
+        <div id="weekList"></div>
+      </div>
+    </div>
+
+    <nav class="bottom glass">
+      <button class="nav active" data-screen="schedule"><span>▦</span><small>Расписание</small></button>
+      <button class="nav" data-screen="tasks"><span>✓</span><small>Задания</small></button>
+      <button class="nav" data-screen="notes"><span>✎</span><small>Заметки</small></button>
+      <button class="nav" data-screen="settings"><span>⚙</span><small>Настройки</small></button>
+    </nav>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
